@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>XYZ Bank Login</title>
+    <title>Welcome to Your Budget App</title>
 </head>
 <body>
-    <h2>XYZ Bank Login</h2>
+    <h2>Enter Your Name to Begin</h2>
 
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
     <form method="POST" action="/login">
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br><br>
-
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
-
-        <input type="submit" value="Login">
+        <label>Your Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <input type="submit" value="Start">
     </form>
-
-    <p><strong>Sample User:</strong></p>
-    <p>Username: johndoe123</p>
-    <p>Password: securepass456</p>
 </body>
 </html>
