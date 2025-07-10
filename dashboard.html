@@ -1,97 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>XYZ Bank Dashboard</title>
+    <title>Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f2f2f2;
-        }
-        h1 {
-            color: #004080;
+            background: #f2f2f2;
+            padding: 20px;
         }
         .section {
-            background-color: white;
+            background: white;
             padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
+            margin-bottom: 25px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #004080;
-            color: white;
-        }
         input[type="number"], input[type="submit"] {
-            padding: 8px;
-            margin-top: 10px;
+            padding: 10px;
             width: 100%;
-            border-radius: 4px;
+            margin-top: 10px;
+            border-radius: 5px;
             border: 1px solid #ccc;
+        }
+        h2 {
+            color: #004080;
         }
     </style>
 </head>
 <body>
 
-<h1>Welcome to XYZ Bank</h1>
+    <h1>Welcome, {{ user }}!</h1>
 
-<div class="section">
-    <h2>Main Account Balance</h2>
-    <p><strong>Account Holder:</strong> John Doe</p>
-    <p><strong>Balance:</strong> $12,450.75</p>
-</div>
+    <div class="section">
+        <h2>Salary Budget Calculator</h2>
+        <form method="POST">
+            <label>Enter your monthly salary ($):</label><br>
+            <input type="number" name="salary" step="0.01" required>
+            <input type="submit" value="Calculate Budget">
+        </form>
 
-<div class="section">
-    <h2>Recent Transactions</h2>
-    <table>
-        <tr><th>Date</th><th>Description</th><th>Amount</th></tr>
-        <tr><td>July 8, 2025</td><td>Grocery Store</td><td>-$85.20</td></tr>
-        <tr><td>July 7, 2025</td><td>Paycheck</td><td>+$2,500.00</td></tr>
-        <tr><td>July 5, 2025</td><td>Electric Bill</td><td>-$120.45</td></tr>
-    </table>
-</div>
-
-<div class="section">
-    <h2>Stocks Overview</h2>
-    <table>
-        <tr><th>Stock</th><th>Shares</th><th>Value</th></tr>
-        <tr><td>Apple (AAPL)</td><td>15</td><td>$3,225.00</td></tr>
-        <tr><td>Amazon (AMZN)</td><td>8</td><td>$1,180.00</td></tr>
-        <tr><td>Tesla (TSLA)</td><td>5</td><td>$1,400.00</td></tr>
-    </table>
-</div>
-
-<div class="section">
-    <h2>Salary Expense Breakdown</h2>
-    <form method="POST" action="/dashboard">
-        <input type="number" name="salary" placeholder="Enter your monthly salary in $" required>
-        <input type="submit" value="Calculate Expenses">
-    </form>
-
-    {% if expenses %}
-        <div style="margin-top: 15px; background-color: #eef; padding: 15px; border-radius: 6px;">
-            <h3>Estimated Monthly Expenses for ${{ salary }}</h3>
+        {% if expenses %}
+        <div style="margin-top: 20px;">
+            <h3>Estimated Monthly Breakdown for ${{ salary }}</h3>
             <ul>
                 <li><strong>Rent:</strong> ${{ expenses.rent }}</li>
                 <li><strong>Groceries:</strong> ${{ expenses.groceries }}</li>
                 <li><strong>Personal:</strong> ${{ expenses.personal }}</li>
-                <li><strong>Loan:</strong> ${{ expenses.loan }}</li>
+                <li><strong>Loan Payments:</strong> ${{ expenses.loan }}</li>
                 <li><strong>Other:</strong> ${{ expenses.other }}</li>
-                <li><strong><em>Remaining:</em></strong> ${{ expenses.remaining }}</li>
+                <li><strong>Remaining Savings:</strong> ${{ expenses.remaining }}</li>
             </ul>
         </div>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Savings Goal Planner</h2>
+        <form method="POST">
+            <label>Total Savings Goal ($):</label><br>
+            <input type="number" name="goal_amount" step="0.01" required><br><br>
+            <label>Timeframe (months):</label><br>
+            <input type="number" name="goal_months" required>
+            <input type="submit" value="Calculate Savings Plan">
+        </form>
+
+        {% if monthly_save %}
+        <div style="margin-top: 20px;">
+            <h3>Savings Plan</h3>
+            <p>To save <strong>${{ savings_goal }}</strong> in your chosen time, you need to save <strong>${{ monthly_save }}</strong> every month.</p>
+        </div>
+        {% endif %}
+    </div>
 
 </body>
 </html>
