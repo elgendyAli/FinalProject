@@ -26,6 +26,12 @@ form {
     flex-direction: column;
 }
 
+h1 {
+    text-align: left;
+    color: rgb(0, 0, 109);
+    font-family: "Bebas Neue";
+}
+
 h2 {
     text-align: center;
     margin-bottom: 1.5rem;
