@@ -2,11 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Dummy database for users
-users = {
-    "johndoe123": "securepass456"
-}
-
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -14,13 +9,11 @@ def home():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form.get("name")
+        username = request.form.get("username")
         password = request.form.get("password")
-
-        if username in users and users[username] == password:
+        if username:
             return redirect(url_for("dashboard", user=username))
-        else:
-            return render_template("login.html", error="Invalid username or password.")
+        return render_template("login.html", error="Please enter a username.")
     return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
@@ -28,36 +21,54 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username in users:
-            return render_template("register.html", register_error="Username already exists.")
-        users[username] = password
-        return redirect(url_for("login"))
+        # 🔐 Optional: save this to a database or file later
+        if username and password:
+            return redirect(url_for("dashboard", user=username))
+        else:
+            return render_template("register.html", register_error="Please enter a valid username and password.")
     return render_template("register.html")
 
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
     user = request.args.get("user", "Guest")
     salary = None
-    expenses = None
+    breakdown = None
+    remaining = None
     savings_goal = None
     monthly_save = None
 
     if request.method == "POST":
-        if request.form.get("salary"):
+        form_type = request.form.get("form_type")
+
+        # Budget planner
+        if form_type == "budget":
             try:
                 salary = float(request.form.get("salary"))
-                expenses = {
-                    "rent": round(salary * 0.30, 2),
-                    "groceries": round(salary * 0.15, 2),
-                    "personal": round(salary * 0.10, 2),
-                    "loan": round(salary * 0.20, 2),
-                    "other": round(salary * 0.05, 2),
-                }
-                expenses["remaining"] = round(salary - sum(expenses.values()), 2)
-            except:
+                breakdown = []
+                total_spent = 0
+
+                for i in range(1, 6):
+                    name = request.form.get(f"cat_name_{i}")
+                    amount = request.form.get(f"cat_amount_{i}")
+                    percent = request.form.get(f"cat_percent_{i}")
+
+                    if name:
+                        if amount:
+                            value = round(float(amount), 2)
+                        elif percent:
+                            value = round((float(percent) / 100) * salary, 2)
+                        else:
+                            continue
+
+                        total_spent += value
+                        breakdown.append({"name": name, "amount": value})
+
+                remaining = round(salary - total_spent, 2)
+            except ValueError:
                 pass
 
-        if request.form.get("goal_amount") and request.form.get("goal_months"):
+        # Savings planner
+        elif form_type == "savings":
             try:
                 amount = float(request.form.get("goal_amount"))
                 months = int(request.form.get("goal_months"))
@@ -70,7 +81,8 @@ def dashboard():
         "dashboard.html",
         user=user,
         salary=salary,
-        expenses=expenses,
+        breakdown=breakdown,
+        remaining=remaining,
         savings_goal=savings_goal,
         monthly_save=monthly_save
     )
