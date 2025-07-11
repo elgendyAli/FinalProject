@@ -2,16 +2,37 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+# Dummy database for users
+users = {
+    "johndoe123": "securepass456"
+}
+
 @app.route('/')
 def home():
+    return render_template("index.html")
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("name")
+        password = request.form.get("password")
+
+        if username in users and users[username] == password:
+            return redirect(url_for("dashboard", user=username))
+        else:
+            return render_template("login.html", error="Invalid username or password.")
     return render_template("login.html")
 
-@app.route('/login', methods=["POST"])
-def login():
-    name = request.form.get("name")
-    if name:
-        return redirect(url_for("dashboard", user=name))
-    return render_template("login.html", error="Please enter a name.")
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username in users:
+            return render_template("register.html", register_error="Username already exists.")
+        users[username] = password
+        return redirect(url_for("login"))
+    return render_template("register.html")
 
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
@@ -51,8 +72,4 @@ def dashboard():
         salary=salary,
         expenses=expenses,
         savings_goal=savings_goal,
-        monthly_save=monthly_save
-    )
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        monthly_save=monthly_sa
