@@ -2,17 +2,17 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Log In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Register</title>
 </head>
 <body class="register">
     <div class="form">
-        <button onclick="window.location.href='/'" > Back </button>
+        <a href="/"><button>Back</button></a>
         <h2>Register</h2>
         <form method="POST" action="/register">
-            <label for="new_username">New Username:</label>
+            <label for="username">New Username:</label>
             <input type="text" id="username" name="username" required><br><br>
-            <label for="new_password">New Password:</label>
+            <label for="password">New Password:</label>
             <input type="password" id="password" name="password" required><br><br>
             <p>Already have an account? <a href="/login">Log in here</a></p>
             <input type="submit" value="Register">
