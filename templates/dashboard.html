@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,17 +44,12 @@
         <div style="margin-top: 20px;">
             <h3>Estimated Monthly Breakdown for ${{ salary }}</h3>
             <ul>
-                <li><strong>Rent:</strong> <input type="number" name="rent" required></li>
-                <li><strong>Groceries:</strong> <input type="number" name="groceries" required></li>
-                <li><strong>Personal:</strong> <input type="number" name="personal" required></li>
-                <li><strong>Loan Payments:</strong> <input type="number" name="loan payments" required></li>
-                <li><strong>Other:</strong> <input type="number" name="other" required></li>
-              <!--  <li><strong>Rent:</strong> ${{ expenses.rent }}</li> -->
-              <!--  <li><strong>Groceries:</strong> ${{ expenses.groceries }}</li> -->
-              <!--  <li><strong>Personal:</strong> ${{ expenses.personal }}</li> -->
-              <!--  <li><strong>Loan Payments:</strong> ${{ expenses.loan }}</li> -->
-              <!--  <li><strong>Other:</strong> ${{ expenses.other }}</li> -->
-              <!--  <li><strong>Remaining Savings:</strong> ${{ expenses.remaining }}</li> -->
+                <li><strong>Rent:</strong> ${{ expenses.rent }}</li>
+                <li><strong>Groceries:</strong> ${{ expenses.groceries }}</li>
+                <li><strong>Personal:</strong> ${{ expenses.personal }}</li>
+                <li><strong>Loan Payments:</strong> ${{ expenses.loan }}</li>
+                <li><strong>Other:</strong> ${{ expenses.other }}</li>
+                <li><strong>Remaining Savings:</strong> ${{ expenses.remaining }}</li>
             </ul>
         </div>
         {% endif %}
@@ -72,7 +68,7 @@
         {% if monthly_save %}
         <div style="margin-top: 20px;">
             <h3>Savings Plan</h3>
-            <p>To save <strong>${{ savings_goal }}</strong> in your chosen time, you need to save <strong>${{ monthly_save }}</strong> every month.</p>
+            <p>To save <strong>${{ savings_goal }}</strong>, you need to save <strong>${{ monthly_save }}</strong> per month.</p>
         </div>
         {% endif %}
     </div>
