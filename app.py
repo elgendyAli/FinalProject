@@ -4,6 +4,9 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Needed for session
 
+# Temporary storage for registered users
+users = {}
+
 # Automatically make the year available in all templates
 @app.context_processor
 def inject_current_year():
@@ -13,15 +16,20 @@ def inject_current_year():
 def index():
     return render_template('index.html')
 
+from flask import session  # Make sure this is imported at the top
+
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username:
-            session['user'] = username
+
+        if username in users and users[username] == password:
+            session["user"] = username  # ✅ Save user to session
             return redirect(url_for("dashboard"))
-        return render_template("login.html", error="Please enter a username.")
+
+        return render_template("login.html", error="Invalid username or password.")
+
     return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
@@ -29,11 +37,13 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username and password:
-            session['user'] = username
-            return redirect(url_for("dashboard"))
-        else:
-            return render_template("register.html", register_error="Please enter a valid username and password.")
+
+        if username in users:
+            return render_template("register.html", register_error="Username already exists.")
+
+        users[username] = password  # ← this line must exist
+        return redirect(url_for("login"))
+
     return render_template("register.html")
 
 @app.route('/dashboard', methods=["GET", "POST"])
