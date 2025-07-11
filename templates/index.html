@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Home</title>
+    <title>Welcome - Valora Wealth</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="index">
-    <h1>Welcome to our page!</h1>
-    <a href="/register"><button>Register</button></a>
-    <a href="/login"><button>Log In</button></a>
+<body>
+
+    <div class="form">
+        <h1>Welcome to Valora Wealth!</h1>
+        <button onclick="window.location.href='/register'">Register</button>
+        <button onclick="window.location.href='/login'">Log In</button>
+    </div>
+
 </body>
 </html>

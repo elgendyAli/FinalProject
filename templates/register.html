@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <title>Register - Valora Wealth</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Register</title>
 </head>
-<body class="register">
+<body>
+
     <div class="form">
-        <a href="/"><button>Back</button></a>
+        <button onclick="window.location.href='/'">Back</button>
         <h2>Register</h2>
         <form method="POST" action="/register">
             <label for="username">New Username:</label>
-            <input type="text" id="username" name="username" required><br><br>
+            <input type="text" id="username" name="username" required>
             <label for="password">New Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <input type="password" id="password" name="password" required>
             <p>Already have an account? <a href="/login">Log in here</a></p>
             <input type="submit" value="Register">
         </form>
         {% if register_error %}
-            <p style="color: red;">{{ register_error }}</p>
+            <p style="color: #ffd700;">{{ register_error }}</p>
         {% endif %}
     </div>
+
 </body>
 </html>

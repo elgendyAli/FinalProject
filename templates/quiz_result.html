@@ -1,16 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Result</title>
+    <title>Spending Profile Quiz - Valora Wealth</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="quiz">
+<body>
+
     <div class="form">
-        <h2>Your Spending Profile Result</h2>
-        <p>{{ advice }}</p>
-        <br>
-        <a href="/dashboard"><button>Back to Dashboard</button></a>
+        <h2>Spending Profile Quiz</h2>
+        <form method="POST" action="/quiz">
+            <!-- Preference Questions -->
+            <label>1. Do you prefer brand-name or generic products?</label>
+            <input type="radio" name="q1" value="expensive" required> Brand-name<br>
+            <input type="radio" name="q1" value="affordable"> Generic<br><br>
+
+            <label>2. How often do you eat out?</label>
+            <input type="radio" name="q2" value="expensive" required> Several times a week<br>
+            <input type="radio" name="q2" value="moderate"> Once a week<br>
+            <input type="radio" name="q2" value="affordable"> Rarely or never<br><br>
+
+            <label>3. Do you prefer high-end or budget electronics?</label>
+            <input type="radio" name="q3" value="expensive" required> High-end<br>
+            <input type="radio" name="q3" value="affordable"> Budget<br><br>
+
+            <label>4. What type of vacations do you enjoy?</label>
+            <input type="radio" name="q4" value="expensive" required> Luxury and resorts<br>
+            <input type="radio" name="q4" value="moderate"> Road trips or moderate travel<br>
+            <input type="radio" name="q4" value="affordable"> Staycations or nature trips<br><br>
+
+            <label>5. Do you tend to upgrade your phone regularly?</label>
+            <input type="radio" name="q5" value="expensive" required> Every year or two<br>
+            <input type="radio" name="q5" value="affordable"> Only when necessary<br><br>
+
+            <!-- Spending Habit Questions -->
+            <label>6. Do you create a monthly budget?</label>
+            <input type="radio" name="q6" value="disciplined" required> Always<br>
+            <input type="radio" name="q6" value="moderate"> Sometimes<br>
+            <input type="radio" name="q6" value="risky"> Never<br><br>
+
+            <label>7. Do you track your spending?</label>
+            <input type="radio" name="q7" value="disciplined" required> Yes<br>
+            <input type="radio" name="q7" value="risky"> No<br><br>
+
+            <label>8. Do you often make impulse purchases?</label>
+            <input type="radio" name="q8" value="risky" required> Yes<br>
+            <input type="radio" name="q8" value="disciplined"> Rarely<br><br>
+
+            <label>9. How do you usually handle unexpected expenses?</label>
+            <input type="radio" name="q9" value="disciplined" required> I have an emergency fund<br>
+            <input type="radio" name="q9" value="moderate"> I adjust my monthly spending<br>
+            <input type="radio" name="q9" value="risky"> I use credit or borrow<br><br>
+
+            <label>10. Do you carry a credit card balance month to month?</label>
+            <input type="radio" name="q10" value="risky" required> Yes<br>
+            <input type="radio" name="q10" value="disciplined"> No<br><br>
+
+            <!-- Financial Self-Check -->
+            <label>How are you doing financially right now?</label>
+            <input type="radio" name="status" value="great" required> Great<br>
+            <input type="radio" name="status" value="okay"> Okay<br>
+            <input type="radio" name="status" value="struggling"> Struggling<br><br>
+
+            <input type="submit" value="See My Results">
+        </form>
     </div>
+
 </body>
 </html>

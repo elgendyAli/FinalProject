@@ -1,10 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'  # Needed for session
+
+# Automatically make the year available in all templates
+@app.context_processor
+def inject_current_year():
+    return {'current_year': datetime.now().year}
 
 @app.route('/')
-def home():
-    return render_template("index.html")
+def index():
+    return render_template('index.html')
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -12,7 +19,8 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         if username:
-            return redirect(url_for("dashboard", user=username))
+            session['user'] = username
+            return redirect(url_for("dashboard"))
         return render_template("login.html", error="Please enter a username.")
     return render_template("login.html")
 
@@ -21,16 +29,16 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        # 🔐 Optional: save this to a database or file later
         if username and password:
-            return redirect(url_for("dashboard", user=username))
+            session['user'] = username
+            return redirect(url_for("dashboard"))
         else:
             return render_template("register.html", register_error="Please enter a valid username and password.")
     return render_template("register.html")
 
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-    user = request.args.get("user", "Guest")
+    user = session.get("user", "Guest")
     salary = None
     breakdown = None
     remaining = None
@@ -40,7 +48,6 @@ def dashboard():
     if request.method == "POST":
         form_type = request.form.get("form_type")
 
-        # Budget planner
         if form_type == "budget":
             try:
                 salary = float(request.form.get("salary"))
@@ -67,7 +74,6 @@ def dashboard():
             except ValueError:
                 pass
 
-        # Savings planner
         elif form_type == "savings":
             try:
                 amount = float(request.form.get("goal_amount"))
@@ -90,46 +96,41 @@ def dashboard():
 @app.route('/quiz', methods=["GET", "POST"])
 def quiz():
     if request.method == "POST":
-        # Preference: expensive = +2, moderate = +1, affordable = 0
-        # Habits: disciplined = 0, moderate = +1, risky = +2
-        # Financial status: great = 0, okay = +1, struggling = +2
+        answers = {
+            "q1": request.form.get("q1"),
+            "q2": request.form.get("q2"),
+            "q3": request.form.get("q3"),
+            "q4": request.form.get("q4"),
+            "q5": request.form.get("q5"),
+            "q6": request.form.get("q6"),
+            "q7": request.form.get("q7"),
+            "q8": request.form.get("q8"),
+            "q9": request.form.get("q9"),
+            "q10": request.form.get("q10"),
+            "status": request.form.get("status"),
+        }
 
-        score = 0
+        # Analyze preference (q1–q5)
+        preference_score = sum(1 for q in ["q1", "q2", "q3", "q4", "q5"] if answers[q] == "expensive")
 
-        preference_questions = ['q1', 'q2', 'q3', 'q4', 'q5']
-        habit_questions = ['q6', 'q7', 'q8', 'q9', 'q10']
-        status = request.form.get("status")
+        # Analyze discipline (q6–q10)
+        discipline_score = sum(1 for q in ["q6", "q7", "q8", "q9", "q10"] if answers[q] == "disciplined")
 
-        for q in preference_questions:
-            val = request.form.get(q)
-            if val == "expensive":
-                score += 2
-            elif val == "moderate":
-                score += 1
+        status = answers["status"]
 
-        for q in habit_questions:
-            val = request.form.get(q)
-            if val == "risky":
-                score += 2
-            elif val == "moderate":
-                score += 1
-
-        if status == "okay":
-            score += 1
-        elif status == "struggling":
-            score += 2
-
-        # Interpretation based on score (max is 22, min is 0)
-        if score <= 5:
-            advice = "You’re on track financially! Your preferences and habits align well with responsible spending."
-        elif score <= 10:
-            advice = "You're doing okay, but keep an eye on your spending preferences and try to plan ahead more often."
-        elif score <= 16:
-            advice = "You're at risk of overspending. Consider adjusting your preferences and improving your money habits."
+        # Decision logic
+        if preference_score >= 4 and discipline_score <= 1 and status == "struggling":
+            message = "You may be living above your means. Try budgeting and cutting back on non-essentials."
+        elif preference_score >= 3 and status in ["struggling", "okay"]:
+            message = "Consider balancing your lifestyle with your income to improve financial health."
+        elif discipline_score >= 4 and status == "great":
+            message = "You're managing your money well! Keep it up!"
+        elif discipline_score >= 3 and preference_score <= 2 and status == "okay":
+            message = "You're on the right track. A little more discipline could go a long way."
         else:
-            advice = "Your current lifestyle may not be financially sustainable. Try creating a tighter budget and reducing luxury purchases."
+            message = "Consider reflecting on your habits and building a savings plan for better security."
 
-        return render_template("quiz_result.html", advice=advice)
+        return render_template("quiz_result.html", message=message)
 
     return render_template("quiz.html")
 

@@ -1,151 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas Neue">
     <meta charset="UTF-8">
     <title>Dashboard - Valora Wealth</title>
-
-    <!-- Google Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab">
-
-    <style>
-        /* Base Reset and Fonts */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(30, 30, 30, 0.95)),
-                        url('https://images.unsplash.com/photo-1605902711622-cfb43c44367e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-            background-size: cover;
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: #ffd700;
-        }
-
-        .header {
-            text-align: center;
-            padding: 60px 20px 30px;
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 1px solid #444;
-        }
-
-        .header h1 {
-            font-size: 40px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .header p {
-            color: #c0c0c0;
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .section {
-            background: rgba(28, 28, 28, 0.95);
-            border: 1px solid #444;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.15);
-        }
-
-        form {
-            margin-top: 15px;
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: 500;
-            color: #dcdcdc;
-        }
-
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            border: 1px solid #666;
-            background-color: #2c2c2c;
-            color: #fff;
-            font-size: 15px;
-        }
-
-        input[type="submit"] {
-            background: linear-gradient(to right, #ffd700, #c0c0c0);
-            color: #0a0a0a;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background: linear-gradient(to right, #e6c200, #a0a0a0);
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            padding: 5px 0;
-            font-size: 16px;
-        }
-
-        li strong {
-            color: #ffd700;
-        }
-
-        .breakdown {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #2b2b2b;
-            border-radius: 8px;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #aaa;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-top: 1px solid #444;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <div class="header">
-        <h1>Valora Wealth</h1>
-        <p>Your Trusted Personal Finance Partner</p>
-    </div>
-
     <div class="container">
-
+        <h1>Valora Wealth</h1>
         <h2>Welcome, {{ user }}!</h2>
 
         <div class="section">
@@ -160,9 +23,9 @@
                     <label>Category {{ i }} Name:</label>
                     <input type="text" name="cat_name_{{ i }}">
                     <label>Amount ($):</label>
-                    <input type="number" name="cat_amount_{{ i }}" step="0.01">
+                    <input type="number" name="cat_amount_{{ i }}" step="0.01" min="0">
                     <label>OR Percentage (%):</label>
-                    <input type="number" name="cat_percent_{{ i }}" step="0.01">
+                    <input type="number" name="cat_percent_{{ i }}" step="0.01" min="0" max="100">
                 {% endfor %}
 
                 <input type="submit" value="Calculate Budget">
@@ -188,7 +51,7 @@
                 <label>Goal Amount ($):</label>
                 <input type="number" name="goal_amount" step="0.01" required>
                 <label>Timeframe (months):</label>
-                <input type="number" name="goal_months" required>
+                <input type="number" name="goal_months" min="1" required>
                 <input type="submit" value="Calculate Savings Plan">
             </form>
 
@@ -200,15 +63,15 @@
             {% endif %}
         </div>
 
+        <div class="section">
+            <h2>Want a personalized spending checkup?</h2>
+            <a href="/quiz"><button>Take the Spending Profile Quiz</button></a>
+        </div>
+
     </div>
 
     <div class="footer">
         &copy; {{ current_year }} Valora Wealth. All rights reserved.
-    </div>
-
-    <div class="section">
-    <h2>Want a personalized spending checkup?</h2>
-    <a href="/quiz"><button>Take the Spending Profile Quiz</button></a>
     </div>
 
 </body>

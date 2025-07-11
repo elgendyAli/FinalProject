@@ -1,237 +1,90 @@
-/* General body styles */
-body.login, body.register, body.index {
-    display: flex;                      /* Allows easier alignment of elemtnts inside it */
-    flex-direction: column;             /* Stacks elements vertically */
-    justify-content: center;            /* Centers the content horizontally */
-    align-items: center;                /* Centers the content vertically */
-    height: 100vh;                      /* Full height of the screen */
-    background-color: #f7f7f7;
-    font-family: Arial, sans-serif;
-}
-
-/* Container style */
-.form {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Form elements */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-h1 {
-    text-align: left;
-    color: rgb(0, 0, 109);
-    font-family: "Bebas Neue";
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
-    font-family: "Roboto Slab";
-}
-
-label {
-    margin-bottom: 0.2rem;
-    font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-/* Submit button */
-input[type="submit"] {
-    background-color: #333;
-    color: white;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-input[type="submit"]:hover {
-    background-color: #000;
-}
-
-/* Home button */
-button {
-    padding: 10px 20px;             /* Add space between text and button edges */
-    margin: 10px;                   /* Add space around the button */
-    font-size: 16px;
-    border: 1px solid #ccc;       /* Add a border to the button */
-    border-radius: 6px;             /* Rounded corners */
-    cursor: pointer;
-    background-color: white;
-}
-
-/* Error message */
-p {
-    font-size: 14px;
-    margin-top: 1rem;
-}
-
-/* Link under form */
-a {
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-
-
-h1 {
-    font-family: "Literata";
-}
+/* Shared gold-themed styles */
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    padding: 20px;
-}
-.section {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-input[type="number"], input[type="submit"] {
-    padding: 10px;
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(30,30,30,0.95)),
+              url('https://images.unsplash.com/photo-1605902711622-cfb43c44367e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
-h2 {
-    color: #004080;
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: #ffd700;
+  margin-bottom: 1rem;
 }
 
-/* General body styling */
-body.login {
-    background: #f0f4f8;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+a {
+  color: #ffd700;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
-/* Form container */
-.form {
-    background: #ffffff;
-    padding: 40px 30px;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    box-sizing: border-box;
+button, input[type="submit"] {
+  background: linear-gradient(to right, #ffd700, #c0a000);
+  color: #0a0a0a;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-/* Heading */
-.form h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #2c3e50;
-}
-
-/* Labels and inputs */
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #34495e;
+button:hover, input[type="submit"]:hover {
+  background: linear-gradient(to right, #e6c200, #a08800);
 }
 
 input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition: border 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #2980b9;
-    outline: none;
-}
-
-/* Submit button */
+input[type="number"],
+input[type="password"],
 input[type="submit"] {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 4px;
     width: 100%;
-    cursor: pointer;
+    padding: 12px;
     font-size: 16px;
-    transition: background 0.3s;
-}
-
-input[type="submit"]:hover {
-    background-color: #1f6391;
-}
-
-/* Back button styling */
-button {
-    background-color: transparent;
-    border: 1px solid #7f8c8d;
-    color: #7f8c8d;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 6px;
     margin-bottom: 15px;
-    font-size: 14px;
-    transition: background 0.3s, color 0.3s;
 }
 
-button:hover {
-    background-color: #ecf0f1;
-    color: #2c3e50;
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  color: #dcdcdc;
 }
 
-/* Register link */
-.form p {
-    font-size: 14px;
-    text-align: center;
-    color: #7f8c8d;
+.form, .section {
+    width: 100%;
+    max-width: 700px;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 10px;
+    background-color: rgba(28, 28, 28, 0.95);
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.15);
+    border: 1px solid #444;
 }
 
-.form a {
-    color: #2980b9;
-    text-decoration: none;
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-.form a:hover {
-    text-decoration: underline;
-}
 
-/* Error message */
-.form p[style*="color: red;"] {
-    text-align: center;
-    margin-top: 10px;
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #aaa;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-top: 1px solid #444;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
-
