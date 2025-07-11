@@ -87,5 +87,51 @@ def dashboard():
         monthly_save=monthly_save
     )
 
+@app.route('/quiz', methods=["GET", "POST"])
+def quiz():
+    if request.method == "POST":
+        # Preference: expensive = +2, moderate = +1, affordable = 0
+        # Habits: disciplined = 0, moderate = +1, risky = +2
+        # Financial status: great = 0, okay = +1, struggling = +2
+
+        score = 0
+
+        preference_questions = ['q1', 'q2', 'q3', 'q4', 'q5']
+        habit_questions = ['q6', 'q7', 'q8', 'q9', 'q10']
+        status = request.form.get("status")
+
+        for q in preference_questions:
+            val = request.form.get(q)
+            if val == "expensive":
+                score += 2
+            elif val == "moderate":
+                score += 1
+
+        for q in habit_questions:
+            val = request.form.get(q)
+            if val == "risky":
+                score += 2
+            elif val == "moderate":
+                score += 1
+
+        if status == "okay":
+            score += 1
+        elif status == "struggling":
+            score += 2
+
+        # Interpretation based on score (max is 22, min is 0)
+        if score <= 5:
+            advice = "You’re on track financially! Your preferences and habits align well with responsible spending."
+        elif score <= 10:
+            advice = "You're doing okay, but keep an eye on your spending preferences and try to plan ahead more often."
+        elif score <= 16:
+            advice = "You're at risk of overspending. Consider adjusting your preferences and improving your money habits."
+        else:
+            advice = "Your current lifestyle may not be financially sustainable. Try creating a tighter budget and reducing luxury purchases."
+
+        return render_template("quiz_result.html", advice=advice)
+
+    return render_template("quiz.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
