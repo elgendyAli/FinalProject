@@ -72,4 +72,8 @@ def dashboard():
         salary=salary,
         expenses=expenses,
         savings_goal=savings_goal,
-        monthly_save=monthly_sa
+        monthly_save=monthly_save
+    )
+
+if __name__ == '__main__':
+    app.run(debug=True)
